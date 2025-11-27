@@ -1,5 +1,9 @@
 # Executive Summary
-This repository documents a real-world case study in building, diagnosing, and improving a machine learning pipeline to predict customer churn. The project highlights the importance of aligning model evaluation with business goals and demonstrates a robust, iterative approach to data science.
+This report details an end-to-end machine learning pipeline built to predict customer churn for a financial services provider. Faced with high customer attrition, the goal was to develop a model that could accurately identify at-risk customers and provide actionable insights for retention campaigns.
+
+After evaluating five algorithms, an **Neural Network** was selected as the champion model, achieving an **ROC-AUC of 0.52** and a **Recall of 65%**. The primary drivers of churn were identified as poor customer service experiences (low `ResolutionRate`, `HasUnresolvedIssues`) and low customer engagement (`ActivityLevel`) etc.
+
+Based on these findings, we recommend targeted interventions for the top 10% of at-risk customers. A conservative ROI analysis projects with an investment of **$5000** could save approximately **$22,000** in retained revenue, yielding a potential **ROI of 4.4x**. All deliverables, including customer risk lists and feature importance, have been generated.. The project highlights the importance of aligning model evaluation with business goals and demonstrates a robust, iterative approach to data science.
 
 ---
 
