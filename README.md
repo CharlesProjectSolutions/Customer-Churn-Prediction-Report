@@ -7,14 +7,15 @@
 
 Scope:
 1. Data preprocessing:
+   - Perform Exploratory Data Analysis (EDA)
    - Handle missing values, duplicates, and outliers
    - Feature engineering (ratios, engagement metrics)
    - Multicollinearity handling (VIF, drop redundant features)
 2. Class imbalance treatment:
    - Apply SMOTE, class weights, and threshold tuning
 3. Model training:
-   - Train 5 algorithms: Logistic Regression, Random Forest, Gradient Boosting, XGBoost, SVM
    - Use stratified train/test split and cross-validation
+   - Train 5 algorithms: Logistic Regression, Random Forest, Gradient Boosting, XGBoost, Neural Network
 4. Model evaluation:
    - Metrics: accuracy, precision, recall, specificity, F1-score, ROC-AUC, PR-AUC
    - Visualizations: ROC curves, PR curves, confusion matrices, feature importance plots
@@ -23,7 +24,7 @@ Scope:
    - Provide business recommendations tied to these drivers
 6. ROI analysis:
    - Estimate cost vs. benefit of interventions
-   - Calculate ROI for retention strategies
+   * Calculate ROI for retention strategies
 
 # Deliverables:
 - predictions_all_customers.csv (CustomerID, ChurnProbability, PredictedChurn)
