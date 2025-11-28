@@ -24,19 +24,23 @@
    - Perform Exploratory Data Analysis (EDA)
    - Handle missing values, duplicates, and outliers
    - Feature engineering (ratios, engagement metrics)
-   - Multicollinearity handling (VIF, drop redundant features)
-2. Class imbalance treatment:
+     *   `HasUnresolvedIssues`: A binary flag (Yes/No) to explicitly signal poor service experiences.
+     *   `IsHighlyInactive`: A binary flag for customers with `DaysSinceLastLogin` > 90.
+     *   `AvgTransactionsPerLogin`: A ratio feature to measure engagement efficiency.
+     *   `AgeGroup`: Binned the `Age` variable to capture non-linear trends.
+2. Multicollinearity handling (VIF, drop redundant features)
+3. Class imbalance treatment:
    - Apply SMOTE, class weights, and threshold tuning
-3. Model training:
+4. Model training:
    - Use stratified train/test split and cross-validation
    - Train 5 algorithms: Logistic Regression, Random Forest, Gradient Boosting, XGBoost, Neural Network
-4. Model evaluation:
+5. Model evaluation:
    - Metrics: accuracy, precision, recall, specificity, F1-score, ROC-AUC, PR-AUC
    - Visualizations: ROC curves, PR curves, confusion matrices, feature importance plots
-5. Interpretation:
+6. Interpretation:
    - Identify top features driving churn
    - Provide business recommendations tied to these drivers
-6. ROI analysis:
+7. ROI analysis:
    - Estimate cost vs. benefit of interventions
    * Calculate ROI for retention strategies
      
@@ -52,42 +56,14 @@
 
 ---
 
-## 2. Methodology & Pipeline
-
-This project followed an iterative, multi-stage methodology, moving from a naive first attempt to a robust final solution.
-
-### Stage 1: Data Wrangling and Feature Engineering
-*   **Initial Cleanup:** Loaded the `.csv` data, converted the target variable `ChurnStatus` to a factor.
-*   **Feature Creation:** Engineered new, high-impact features to better capture customer behavior, including:
-    *   `HasUnresolvedIssues`: A binary flag (Yes/No) to explicitly signal poor service experiences.
-    *   `IsHighlyInactive`: A binary flag for customers with `DaysSinceLastLogin` > 90.
-    *   `AvgTransactionsPerLogin`: A ratio feature to measure engagement efficiency.
-    *   `AgeGroup`: Binned the `Age` variable to capture non-linear trends.
-*   **Data Reduction:** Handled multicollinearity by removing the `TotalSpend` feature, which was highly correlated with `NumTransactions`.
-
-### Stage 2: Data Modeling (An Iterative Process)
-This project's core lesson was in its iterative modeling approach.
-
-*   **Attempt #1 (Standard Pipeline & Failure):**
-    *   **Method:** A standard pipeline was built using `caret` with 10-fold cross-validation and **SMOTE** to handle class imbalance.
-    *   **Result:** This approach failed. Tree-based models like Random Forest and XGBoost achieved high accuracy (~78%) but had a **Recall of only 5%** and an ROC-AUC near 0.5.
-    *   **Diagnosis:** The models were not learning; they were simply predicting the majority class ("No Churn"). SMOTE was proving ineffective for this particular dataset.
-
-*   **Attempt #2 (Robust Pipeline & Success):**
-    *   **Method:** The pipeline was rebuilt to use **direct class weighting**, a more powerful technique. The weight for the positive class was calculated as `(count of 'No') / (count of 'Yes')` and applied directly during model training.
-    *   **Result:** This was successful. The models began to learn the patterns of the minority class, producing meaningful and varied results.
-
-### Stage 3: Compare and Justify Model Selection
-
-After the robust pipeline was built, the models were evaluated on the unseen test set.
 
 **Final Model Performance:**
 
 
 **Model Justification:**
-Despite having the lowest accuracy, **Logistic Regression was selected as the champion model.**
+Despite having the lowest accuracy, **Neural Network** was selected as the model champion.
 
-*   **Why?** The primary business goal is to **identify as many potential churners as possible**. Recall is therefore the most critical metric. Logistic Regression's Recall of **47.5%** means it successfully finds almost half of all true churners. The other models, with a Recall of only 5%, are practically useless for this business objective. This is a classic case of choosing the right tool for the job, not just the one with the highest score on a generic metric.
+*   **Why?** The primary business goal is to **identify as many potential churners as possible**. Recall is therefore the most critical metric. **Neural Network**'s Recall of **65%** means it successfully finds at least 65% of all true churners. The other models, with a Recall of only 5%, are practically useless for this business objective. This is a classic case of choosing the right tool for the job, not just the one with the highest score on a generic metric.
 
 ---
 
