@@ -5,11 +5,22 @@
 
 ---
 
-## 1. Project Goal & Business Problem
+# Scope:
+1. Data Profiling & preprocessing (missing values, feature engineering, multicollinearity handling)
+2. Class imbalance treatment (SMOTE, class weights, threshold tuning)
+3. Train 5 algorithms: Logistic Regression, Random Forest, Gradient Boosting, XGBoost, Neural Network
+4. Evaluate with accuracy, precision, recall, specificity, F1, ROC-AUC, PR-AUC
+5. Visualize ROC curves, confusion matrices, feature importance plots
+6. Interpret top features and provide business recommendations
+7. Calculate ROI of interventions
 
-*   **Goal:** To build a reliable classification model that predicts the probability of a customer churning.
-*   **Business Problem:** A financial services provider is experiencing high customer attrition. They need a data-driven tool to identify at-risk customers *before* they leave, enabling proactive retention campaigns.
-*   **Challenge:** The dataset is highly imbalanced, with churners representing a small minority. This poses a significant challenge for standard modeling techniques.
+# Deliverables:
+- predictions_all_customers.csv (CustomerID, ChurnProbability, PredictedChurn)
+- top_risk_customers.csv (Top 10% highest churn probability)
+- feature_importance.csv (Ranked drivers of churn)
+- threshold_metrics.csv (Performance across thresholds)
+- Model report (executive summary with metrics, visuals, recommendations, ROI)
+
 
 ---
 
