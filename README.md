@@ -1,7 +1,7 @@
 # Context:
-- Client: Financial services provider
-- Problem: High churn among personal and small business customers
-- Goal: Predict churn probability and recommend interventions to reduce attrition
+- **Client:** Financial services provider
+- **Problem:** A financial services provider is experiencing high churn among personal and small business customers
+- **Goal:** Build a reliable classification model that predicts the probability of a customer churning and recommend interventions to reduce attrition
 
 ---
 
