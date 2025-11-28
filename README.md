@@ -5,14 +5,25 @@
 
 ---
 
-# Scope:
-1. Data Profiling & preprocessing (missing values, feature engineering, multicollinearity handling)
-2. Class imbalance treatment (SMOTE, class weights, threshold tuning)
-3. Train 5 algorithms: Logistic Regression, Random Forest, Gradient Boosting, XGBoost, Neural Network
-4. Evaluate with accuracy, precision, recall, specificity, F1, ROC-AUC, PR-AUC
-5. Visualize ROC curves, confusion matrices, feature importance plots
-6. Interpret top features and provide business recommendations
-7. Calculate ROI of interventions
+Scope:
+1. Data preprocessing:
+   - Handle missing values, duplicates, and outliers
+   - Feature engineering (ratios, engagement metrics)
+   - Multicollinearity handling (VIF, drop redundant features)
+2. Class imbalance treatment:
+   - Apply SMOTE, class weights, and threshold tuning
+3. Model training:
+   - Train 5 algorithms: Logistic Regression, Random Forest, Gradient Boosting, XGBoost, SVM
+   - Use stratified train/test split and cross-validation
+4. Model evaluation:
+   - Metrics: accuracy, precision, recall, specificity, F1-score, ROC-AUC, PR-AUC
+   - Visualizations: ROC curves, PR curves, confusion matrices, feature importance plots
+5. Interpretation:
+   - Identify top features driving churn
+   - Provide business recommendations tied to these drivers
+6. ROI analysis:
+   - Estimate cost vs. benefit of interventions
+   - Calculate ROI for retention strategies
 
 # Deliverables:
 - predictions_all_customers.csv (CustomerID, ChurnProbability, PredictedChurn)
