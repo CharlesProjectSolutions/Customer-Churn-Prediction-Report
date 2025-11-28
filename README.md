@@ -65,16 +65,9 @@ Despite having the lowest accuracy, **Neural Network** was selected as the model
 
 *   **Why?** The primary business goal is to **identify as many potential churners as possible**. Recall is therefore the most critical metric. **Neural Network**'s Recall of **65%** means it successfully finds at least 65% of all true churners. The other models, with a Recall of only 5%, are practically useless for this business objective. This is a classic case of choosing the right tool for the job, not just the one with the highest score on a generic metric.
 
+*   **Business Impact:** By using the model to create customer risk segments ("Critical", "High", "Medium", "Low"), the retention team can focus their budget and efforts on the small group of customers who are most likely to churn, dramatically increasing the efficiency and ROI of their campaigns.
+
 ---
 
-## 3. Business Insights & Recommendations
 
-Using the champion Logistic Regression model, the following actionable insights were derived:
 
-*   **Insight 1: Poor Service is the Biggest Driver of Churn.** The most important features were directly related to customer service interactions (`ResolutionRate`, `HasUnresolvedIssues`).
-    *   **Recommendation:** Overhaul the customer support feedback loop. Implement an immediate follow-up protocol for any customer with an unresolved ticket.
-
-*   **Insight 2: Disengagement is a Clear Warning Sign.** The next most important features were related to customer inactivity (`DaysSinceLastLogin`, `LoginFrequency`).
-    *   **Recommendation:** Launch a proactive re-engagement campaign targeting customers flagged by the model as "Highly Inactive."
-
-*   **Business Impact:** By using the model to create customer risk segments ("Critical", "High", "Medium", "Low"), the retention team can focus their budget and efforts on the small group of customers who are most likely to churn, dramatically increasing the efficiency and ROI of their campaigns.
