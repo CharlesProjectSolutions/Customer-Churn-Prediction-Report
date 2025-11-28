@@ -1,11 +1,25 @@
-# Context:
+# 1. Context:
 - **Client:** Financial services provider
 - **Problem:** A financial services provider is experiencing high churn among personal and small business customers
 - **Goal:** Build a reliable classification model that predicts the probability of a customer churning and recommend interventions to reduce attrition
 
 ---
 
-Scope:
+# 2. Data Overview
+1. Source Files Consolidated:
+   - Transaction_history.csv
+   - Customer_service.csv
+   - Customer_activity.csv
+   - Customer_demographics.csv
+   - Churn.csv: Target Variable: ChurnStatus (0 = retained, 1 = churned).
+
+   - Data Model
+         <img width="1910" height="942" alt="Churn Analysis Data Model" src="https://github.com/user-attachments/assets/c714ad6c-23c5-49f8-91e9-ab7a1690d499" />             
+   - Master File: Consolidated into a single source of truth (Customer_Churn_Data.csv).
+     
+ --- 
+
+# 3. Scope:
 1. Data preprocessing:
    - Perform Exploratory Data Analysis (EDA)
    - Handle missing values, duplicates, and outliers
@@ -25,8 +39,10 @@ Scope:
 6. ROI analysis:
    - Estimate cost vs. benefit of interventions
    * Calculate ROI for retention strategies
-
-# Deliverables:
+     
+ --- 
+ 
+# 4. Deliverables:
 - predictions_all_customers.csv (CustomerID, ChurnProbability, PredictedChurn)
 - top_risk_customers.csv (Top 10% highest churn probability)
 - feature_importance.csv (Ranked drivers of churn)
