@@ -48,7 +48,7 @@
 
   
    - Data Model
-         <img width="2000" height="1500" alt="image" src="https://github.com/user-attachments/assets/7cca7e56-342d-46e3-8b18-a300e7837ff5" />
+         <img width="33000" height="2500" alt="image" src="https://github.com/user-attachments/assets/7cca7e56-342d-46e3-8b18-a300e7837ff5" />
 
          
    - Master File: Consolidated into a single source of truth (Customer_Churn_Data.csv).
@@ -56,14 +56,20 @@
    - Target Variable: ChurnStatus (Binary: 0=Not Churned, 1=Churned)
    - Class Imbalance: 79.6% Not Churned, 20.4% Churned (3.9:1 ratio)
    - Feature Categories: Numerical Features (11), Categorical Features (4)
-     
+
+
+#    Exploratory Data Analysis (EDA) 
+
+   <img width="20000" height="1500" alt="EDA" src="https://github.com/user-attachments/assets/994bd48e-e57a-49ba-9574-3b59b579c616" />
+
+### Key Findings
+   - **Churn Distribution:** Around 20% churn rate. Dataset is imbalanced (more non-churners), which will require balancing strategies (SMOTE, class weights, etc.) in modeling.
+   - **Age Distribution:** Customers are fairly evenly distributed across ages 16 – 69. No obvious skew, so age can be used directly (maybe binned into groups for interpretability).
+   - **Churn by Income Level:** Churn is present across all income levels. Slightly higher churn counts in Low income groups (Could suggest income sensitivity plays a role in churn).
+
  --- 
 
-
-
-
 **Final Model Performance:**
-
 
 **Model Justification:**
 Despite having the lowest accuracy, **Neural Network** was selected as the model champion.
