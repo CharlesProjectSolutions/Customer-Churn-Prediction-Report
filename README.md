@@ -66,15 +66,20 @@
    - **Churn Distribution:** Around 20% churn rate. Dataset is imbalanced (more non-churners), which will require balancing strategies (SMOTE, class weights, etc.) in modeling.
    - **Age Distribution:** Customers are fairly evenly distributed across ages 16 – 69. No obvious skew, so age can be used directly (maybe binned into groups for interpretability).
    - **Churn by Income Level:** Churn is present across all income levels. Slightly higher churn counts in Low income groups (Could suggest income sensitivity plays a role in churn).
-
+   - **Login Frequency vs Churn:** Churners show lower median login frequency compared to retained customers. It suggests engagement is a strong predictor of retention.
+   - **Customer Service Resolution vs Churn:** The churn rate is almost identical between resolved (20.5%) and unresolved (20.7%) cases. So, **Resolution Status** alone may not be a strong churn predictor.
+         - Hypothesis: It might not be whether an issue was resolved or unresolved. It may be how long it took, how many interactions were needed, or how many issues were unresolved over time.
+ 
+ 
  --- 
 
 **Final Model Performance:**
 
 **Model Justification:**
-Despite having the lowest accuracy, **Neural Network** was selected as the model champion.
+**Neural Network** was selected as the model champion despite having the lowest accuracy.
+<img width="2000" height="1500" alt="Model Performance Comparison On Test Set" src="https://github.com/user-attachments/assets/6520e695-1237-444d-81c0-7d9de850c4e2" />
 
-*   **Why?** The primary business goal is to **identify as many potential churners as possible**. Recall is therefore the most critical metric. **Neural Network**'s Recall of **65%** means it successfully finds at least 65% of all true churners. The other models, with a Recall of only 5%, are practically useless for this business objective. This is a classic case of choosing the right tool for the job, not just the one with the highest score on a generic metric.
+*   **Why?** Well, the primary business goal is to **identify as many potential churners as possible**. Recall is therefore the most critical metric. **Neural Network**'s Recall of **0.652** means it successfully finds at least 65% of all true churners. The other models, with a Recall of only 5%, are practically useless for this business objective. This is a classic case of choosing the right tool for the job, not just the one with the highest score on a generic metric.
 
 *   **Business Impact:** By using the model to create customer risk segments ("Critical", "High", "Medium", "Low"), the retention team can focus their budget and efforts on the small group of customers who are most likely to churn, dramatically increasing the efficiency and ROI of their campaigns.
 
