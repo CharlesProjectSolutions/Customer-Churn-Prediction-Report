@@ -77,7 +77,7 @@
 **Neural Network** was selected as the model champion despite having the lowest accuracy.
 <img width="2000" height="1500" alt="Model Performance Comparison On Test Set" src="https://github.com/user-attachments/assets/6520e695-1237-444d-81c0-7d9de850c4e2" />
 
-*   **Why?** Well, the primary business goal is to **identify as many potential churners as possible**. Recall is therefore the most critical metric. **Neural Network**'s Recall of **0.652** means it successfully finds at least 65% of all true churners. The other models, with a Recall of only 5%, are practically useless for this business objective. This is a classic case of choosing the right tool for the job, not just the one with the highest score on a generic metric.
+*   **Why?** Well, the primary business goal is to **identify as many potential churners as possible**. Recall is therefore the most critical metric. **Neural Network**'s Recall of **0.650** means it successfully finds at least 65% of all true churners. The other models, with a Recall of only 5 to 10%, are practically useless for this business objective. This is a classic case of choosing the right tool for the job, not just the one with the highest accuracy score on a generic metric.
 
 ---
 
