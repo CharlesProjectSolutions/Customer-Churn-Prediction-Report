@@ -63,7 +63,9 @@
    <img width="20000" height="1500" alt="EDA" src="https://github.com/user-attachments/assets/994bd48e-e57a-49ba-9574-3b59b579c616" />
 
    - **Visualize Correlations & Identify Class Imbalance**
-              <img width="20000" height="1500" alt="image" src="https://github.com/user-attachments/assets/662e9920-fd3a-40ac-88e1-95fcdf3a33c9" />
+     
+     <img width="20000" height="1500" alt="Correlation" src="https://github.com/user-attachments/assets/c3ce3106-ce53-42df-80e9-aec9e2a03306" />
+
 
 ### Key Findings
    - **Churn Distribution:** Around 20% churn rate. Dataset is imbalanced (more non-churners), which will require balancing strategies (SMOTE, class weights, etc.) in modeling.
