@@ -58,9 +58,12 @@
    - Feature Categories: Numerical Features (11), Categorical Features (4)
 
 
-#    Exploratory Data Analysis (EDA) 
-
+#    EDA & Feature Engineering
+   - **Visualize Distributions**
    <img width="20000" height="1500" alt="EDA" src="https://github.com/user-attachments/assets/994bd48e-e57a-49ba-9574-3b59b579c616" />
+
+   - **Visualize Correlations & Identify Class Imbalance**
+              <img width="20000" height="1500" alt="image" src="https://github.com/user-attachments/assets/662e9920-fd3a-40ac-88e1-95fcdf3a33c9" />
 
 ### Key Findings
    - **Churn Distribution:** Around 20% churn rate. Dataset is imbalanced (more non-churners), which will require balancing strategies (SMOTE, class weights, etc.) in modeling.
@@ -74,10 +77,11 @@
 
 #    Final Model Performance & Justification
 
-**Neural Network** was selected as the model champion despite having the lowest accuracy.
+After multiple iterations, **Neural Network** was selected as the model champion despite having the lowest accuracy.
+
 <img width="2000" height="1500" alt="Model Performance Comparison On Test Set" src="https://github.com/user-attachments/assets/6520e695-1237-444d-81c0-7d9de850c4e2" />
 
-*   **Why?** Well, the primary business goal is to **identify as many potential churners as possible**. Recall is therefore the most critical metric. **Neural Network**'s Recall of **0.650** means it successfully finds at least 65% of all true churners. The other models, with a Recall of only 5 to 10%, are practically useless for this business objective. This is a classic case of choosing the right tool for the job, not just the one with the highest accuracy score on a generic metric.
+*   **Why?** Since the primary business goal is to **identify as many potential churners as possible**. Recall is therefore the most critical metric here. **Neural Network**'s Recall of **0.650** means it successfully finds at least 65% of all true churners. The other models, with a Recall of only 5 to 10%, are practically useless for this business objective.
 
 ---
 
