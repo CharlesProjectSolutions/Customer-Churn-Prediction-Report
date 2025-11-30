@@ -53,18 +53,16 @@
          
    - Master File: Consolidated into a single source of truth (Customer_Churn_Data.csv).
    - Size: 1,000 customers with 17 features
-   - Target Variable: ChurnStatus (Binary: 0=Not Churned, 1=Churned)
-   - Class Imbalance: 79.6% Not Churned, 20.4% Churned (3.9:1 ratio)
    - Feature Categories: Numerical Features (11), Categorical Features (4)
 
 
 #    EDA & Feature Engineering
    - **Visualize Distributions**
-   <img width="20000" height="1500" alt="EDA" src="https://github.com/user-attachments/assets/994bd48e-e57a-49ba-9574-3b59b579c616" />
+   <img width="2000" height="1200" alt="EDA" src="https://github.com/user-attachments/assets/994bd48e-e57a-49ba-9574-3b59b579c616" />
 
    - **Visualize Correlations & Identify Class Imbalance**
      
-     <img width="20000" height="1500" alt="Correlation" src="https://github.com/user-attachments/assets/c3ce3106-ce53-42df-80e9-aec9e2a03306" />
+     <img width="2000" height="1200" alt="Correlation" src="https://github.com/user-attachments/assets/c3ce3106-ce53-42df-80e9-aec9e2a03306" />
 
 
 ### Key Findings
