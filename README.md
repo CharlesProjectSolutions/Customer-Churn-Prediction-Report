@@ -72,7 +72,7 @@ Source Files Consolidated:
 
 ### Key Findings
    - **Class Imbalance:** The target variable ChurnStatus was imbalanced, with churned customers representing only 20% of the dataset, which will require balancing strategies (SMOTE, class weights, etc.) in modeling. To address the issue of class imbalance, SMOTE was applied during resampling to prevent data leakage 
-   - **Age Distribution:** Customers are fairly evenly distributed across ages 16 – 69. No obvious skew, so age can be used directly (maybe binned into groups for interpretability).
+   - **Age Distribution:** Customers are fairly evenly distributed across ages 18 – 69, and no obvious skew.
    - **Churn by Income Level:** Churn is present across all income levels. Slightly higher churn counts in Low income groups (Could suggest income sensitivity plays a role in churn).
    - **Login Frequency vs Churn:** Churners show lower median login frequency compared to retained customers. It suggests engagement is a strong predictor of retention.
    - **Customer Service Resolution vs Churn:** The churn rate is almost identical between resolved (20.5%) and unresolved (20.7%) cases. **Resolution Status** alone may not be a strong churn predictor. So, it might not be whether an issue was resolved or unresolved. It may be how long it took, how many interactions were addressed, or how many issues were unresolved over time.
