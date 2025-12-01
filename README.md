@@ -104,6 +104,23 @@ This shows the model's predictions versus the actual outcomes. Out of 40 custome
 
 <img width="1000" height="500" alt="Rplot" src="https://github.com/user-attachments/assets/2dfb0d73-dd4d-4016-8c30-ab77f66e51e6" />
 
+*   **ROC Curves**
+These curves illustrate the model's ability to distinguish between churning and non-churning customers across all probability thresholds.
+
+<img width="1500" height="1000" alt="ROC curves" src="https://github.com/user-attachments/assets/04cd2e7d-5900-496e-93e4-da7c3a50e122" />
+
+
+---
+
+
+# 3. Key Drivers of Churn (**Feature Importance**) 
+Understanding why a customer churns is critical. The model identified the following factors as the most significant predictors of churn:
+
+<img width="1500" height="1000" alt="Top 10 Churn Drivers" src="https://github.com/user-attachments/assets/bd7dc8eb-0e89-46df-b6b0-c4549dea57f4" />
+
+
+
+
 ---
 
 
