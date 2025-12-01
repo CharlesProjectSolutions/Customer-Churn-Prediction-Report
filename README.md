@@ -91,7 +91,7 @@ Five machine learning models were trained and evaluated. The data was split into
 **Conclusion:** After multiple iterations, **Neural Network** was selected as the model champion despite having the lowest accuracy but particularly having the highest Recall and AUC score of 0.52.
 
 *   **Why?** Since the primary business goal is to **identify as many potential churners as possible**. Recall is therefore the most critical metric here.
-*   **Neural Network**'s Recall of **0.650** means it successfully finds at least 65% of all true churners. The other models, with a Recall of only 5 to 10%, are practically useless for the business objective.
+*   **Neural Network**'s Recall of **0.650** means it successfully finds at least 65% of all true churners. The other models, with a Recall of only 5 to 10%, are practically useless for this business objective.
 
 ---
 
