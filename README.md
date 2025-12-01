@@ -118,7 +118,8 @@ Understanding why a customer churns is critical. The model identified the follow
 
 <img width="1500" height="1000" alt="Top 10 Churn Drivers" src="https://github.com/user-attachments/assets/bd7dc8eb-0e89-46df-b6b0-c4549dea57f4" />
 
-
+*   **NumUnresolved:** The absolute number of unresolved support tickets is a major friction point. Even one or two unresolved issues significantly increase churn probability.
+*   **HasUnresolvedIssues:** Customers whose support tickets are not resolved (or have a low resolution rate) are extremely likely to churn. This points directly to dissatisfaction with customer service.
 
 
 ---
