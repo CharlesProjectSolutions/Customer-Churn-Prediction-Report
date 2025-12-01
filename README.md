@@ -71,7 +71,7 @@ Source Files Consolidated:
 
 
 ### Key Findings
-   - **Class Imbalance:** The target variable ChurnStatus was imbalanced, with churned customers representing only 20% of the dataset, which will require balancing strategies (SMOTE, class weights, etc.) in modeling.
+   - **Class Imbalance:** The target variable ChurnStatus was imbalanced, with churned customers representing only 20% of the dataset, which will require balancing strategies (SMOTE, class weights, etc.) in modeling. To address the issue of class imbalance, SMOTE was applied during resampling to prevent data leakage 
    - **Age Distribution:** Customers are fairly evenly distributed across ages 16 – 69. No obvious skew, so age can be used directly (maybe binned into groups for interpretability).
    - **Churn by Income Level:** Churn is present across all income levels. Slightly higher churn counts in Low income groups (Could suggest income sensitivity plays a role in churn).
    - **Login Frequency vs Churn:** Churners show lower median login frequency compared to retained customers. It suggests engagement is a strong predictor of retention.
@@ -102,7 +102,8 @@ The following visuals provide a detailed look at the final model's performance.
 
 This shows the model's predictions versus the actual outcomes. Out of 40 customers who actually churned in the test set, our model correctly identified 26 of them.
 
-
+<img width="1000" height="500" alt="Rplot" src="https://github.com/user-attachments/assets/2dfb0d73-dd4d-4016-8c30-ab77f66e51e6" />
 
 ---
+
 
