@@ -76,7 +76,8 @@ Source Files Consolidated:
    - **Churn by Income Level:** Churn is present across all income levels. Slightly higher churn counts in Low income groups (Could suggest income sensitivity plays a role in churn).
    - **Login Frequency vs Churn:** Churners show lower median login frequency compared to retained customers. It suggests engagement is a strong predictor of retention.
    - **Customer Service Resolution vs Churn:** The churn rate is almost identical between resolved (20.5%) and unresolved (20.7%) cases. **Resolution Status** alone may not be a strong churn predictor. So, it might not be whether an issue was resolved or unresolved. It may be how long it took, how many interactions were addressed, or how many issues were unresolved over time.
-    - **Multicollinearity:** A high correlation was found between TotalSpend, AvgSpend and NumTransactions etc. To avoid redundancy, TotalSpend was dropped in favor of the more granular AvgSpend and NumTransactions features 
+     
+ - **Multicollinearity:** A high correlation was found between TotalSpend, AvgSpend and NumTransactions etc. To avoid redundancy, TotalSpend was dropped in favor of the more granular AvgSpend and NumTransactions features 
  
  --- 
 
@@ -84,7 +85,7 @@ Source Files Consolidated:
 
 Five machine learning models were trained and evaluated. The data was split into 80% for training and 20% for testing. The models were evaluated on their ability to correctly identify churners (Recall) and their overall predictive power (ROC-AUC and PR-AUC).
 
-###    Final Model Performance & Justification
+###    Final Model Performance
 <img width="2000" height="1500" alt="Model Performance Comparison On Test Set" src="https://github.com/user-attachments/assets/6520e695-1237-444d-81c0-7d9de850c4e2" />
 
 **Conclusion:** After multiple iterations, **Neural Network** was selected as the model champion despite having the lowest accuracy but particularly having the highest Recall and AUC score of 0.52.
