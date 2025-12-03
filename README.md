@@ -31,9 +31,6 @@
  
 # 3. Deliverables:
 - predictions_all_customers.csv (CustomerID, ChurnProbability, PredictedChurn)
-- top_risk_customers.csv (Top 10% highest churn probability)
-- feature_importance.csv (Ranked drivers of churn)
-- threshold_metrics.csv (Performance across thresholds)
 - Model report (executive summary with metrics, visuals, recommendations, ROI)
   
 ---
