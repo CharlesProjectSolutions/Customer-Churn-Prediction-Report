@@ -1,5 +1,11 @@
 
-# Load All Necessary Libraries ---
+
+# =============================================================================
+#                      STEP 1: ENVIRONMENT SETUP
+# What: Install and load all necessary packages for the analysis
+# These packages provide tools for data manipulation, visualization, and modeling
+# =============================================================================
+
 
 library(tidyverse)  # Data manipulation and visualization with ggplot2
 library(lubridate)  # Date Parsing
@@ -40,7 +46,6 @@ set.seed(123)
 
 # =============================================================================
 # STEP 2: DATA LOADING AND INITIAL EXPLORATION
-# Why: Understanding the data structure is the foundation of any ML project
 # =============================================================================
 
 
@@ -55,7 +60,7 @@ churn                 <- read_csv(file.choose(), show_col_types = FALSE)
 
 # =============================================================================
 # STEP 3: INITIAL INSPECTION & DATA QUALITY CHECK
-# Why: Identify missing values, data types, and potential issues etc.
+# Identify missing values, data types, and potential issues etc.
 # =============================================================================
 # 
 
@@ -267,17 +272,16 @@ cat("Imbalance ratio:", round(imbalance_ratio, 2), ":1\n")
 
 # Dataset is imbalanced (more non-churners), around 20% churn rate.
 # Which will require balancing strategies (SMOTE, class weights, etc.) in modeling.
-# WHAT IS CLASS IMBALANCE? Class imbalance occurs when one class (majority) significantly outnumbers the class (minority)
-# in your dataset. 
+# WHAT IS CLASS IMBALANCE? Class imbalance occurs when one class (majority) significantly outnumbers the class (minority) in your dataset. 
 
 
 
 
 # ========================================================================
-#                        STEP 4: EXPLORATORY DATA ANALYSIS (EDA)
+#             STEP 4: EXPLORATORY DATA ANALYSIS (EDA)
 
 # What: Analyzing distributions, relationships, and patterns
-# Why: Understanding the data helps us make informed modeling decisions
+# Understanding the data to help us make informed modeling decisions
 # ========================================================================
 
 
@@ -357,12 +361,6 @@ barplot(count_table_transposed, main = "Churn by Customer Service Resolution", x
 table(service_churn$ResolutionStatus, service_churn$ChurnStatus)
 table(activity_churn$ServiceUsage, activity_churn$ChurnStatus)
 table(merged_demo_churn$IncomeLevel, merged_demo_churn$ChurnStatus)
-favstats <- favstats(LoginFrequency ~ ChurnStatus, data = activity_churn)
-favstats
-
-
-favstats <- favstats(spend_churn$AmountSpent ~ spend_churn$ChurnStatus, data = spend_churn)
-view(favstats)
 
 
 
@@ -374,8 +372,6 @@ min(customer_demographics$Age)
 
 # ========================================================================
 # STEP 5: DATA CLEANING AND PREPROCESSING
-# What: Handling missing values, data types, and column names
-# Why: Clean data is essential for accurate modeling
 # ========================================================================
 
 
@@ -396,9 +392,11 @@ class(customer_service$InteractionDate)
 
 
 # ============================================================================
-# STEP 5: Per-Customer Feature Engineering (No Leakage)
+# STEP 6: Per-Customer Feature Engineering (No Leakage)
 # ============================================================================
 
+
+# Transforming & aggregating transaction & service data to prevent leakage & aligning their features with the churn label granularity 
 
 # Transactions: aggregate spend, frequency, product count
 tfeat <- transaction_history %>% group_by(CustomerID) %>%
@@ -412,6 +410,7 @@ head(tfeat, 6)
 transaction_history %>% filter(CustomerID == 2)
 
 tfeat %>% filter(CustomerID == 2)
+
 
 # Service: interaction volume and outcomes
 sfeat <- customer_service %>% group_by(CustomerID) %>%
@@ -431,12 +430,11 @@ afeat <- customer_activity %>% mutate(DaysSinceLastLogin = as.numeric(max_login 
   select(CustomerID, LoginFrequency, ServiceUsage, DaysSinceLastLogin) %>% ungroup()
 
 head(afeat)
-str(afeat)
 
 
 
 # ============================================================================
-# STEP 3: Merge to a master customer table
+# STEP 7: Merge to a master customer table
 # ============================================================================
 
 
@@ -454,7 +452,7 @@ master <- as.data.frame(master)
 colSums(is.na(master)) # Count missing per column
 
 
-# Fill engineered NAs with neutral values (just to keeps the rows usable)
+# Fill engineered NA's with neutral values zeros (just to keeps the rows usable)
 master <- master %>% 
   mutate(TotalSpend = replace_na(TotalSpend, 0), AvgSpend = replace_na(AvgSpend, 0), 
          NumTransactions = replace_na(NumTransactions, 0), 
@@ -476,6 +474,61 @@ colnames(master)
 # Checking for Missing Values
 colSums(is.na(master)) # Count missing per column
 
+
+
+# -----------------------------
+# 5) Quick EDA snapshots
+# -----------------------------
+
+
+
+# 1. Calculate the raw counts
+churn_counts <- table(master$ChurnStatus)
+
+# 2. Calculate the proportions (percentages)
+churn_props <- prop.table(churn_counts)
+
+# 3. Combine into a data frame and force the columns to be proper vectors
+churn_stats <- data.frame(ChurnStatus = names(churn_counts), n = as.numeric(churn_counts), pct = as.numeric(churn_props))
+
+# Convert ChurnStatus to a factor for proper plotting
+churn_stats$ChurnStatus <- factor(churn_stats$ChurnStatus)
+
+print(churn_stats)
+
+# Simple churn bar chart
+p_churn <- ggplot(churn_stats, aes(x = ChurnStatus, y = n)) + geom_col() + geom_text(aes(label = scales::percent(pct, accuracy = 0.1)), 
+                                                                                     vjust = -0.2) + labs(title = "Churn Distribution", 
+                                                                                                          x = "Churn (0/1)", 
+                                                                                                          y = "Count")
+
+p_churn
+
+# Numeric correlations (Pearson) among engineered numeric features
+numeric_cols <- c("Age","TotalSpend","AvgSpend","NumTransactions","UniqueProductCategories", "NumInteractions","NumResolved", 
+                  "NumUnresolved","ResolutionRate", "LoginFrequency","DaysSinceLastLogin")
+
+
+
+corr_mat <- master %>% select(all_of(numeric_cols)) %>% cor(use = "pairwise.complete.obs", method = "pearson")
+
+# Heatmap-friendly long format
+corr_long <- as.data.frame(as.table(corr_mat)) %>% rename(Var1 = Var1, Var2 = Var2, value = Freq)
+p_corr <- ggplot(corr_long, aes(Var1, Var2, fill = value)) + geom_tile(color = "white") + scale_fill_gradient2(low = "blue", 
+                                                                                                               mid = "white", 
+                                                                                                               high = "red", 
+                                                                                                               midpoint = 0) + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) + labs(title = "Numeric Feature Correlation (Pearson)", x = NULL, y = NULL)
+
+corr_long
+p_corr
+
+
+
+
+
+
+
 #   write_csv(master, "C:/Users/Charles/Downloads/R Project/Customer_Churn_Data.csv")
 
 
@@ -485,7 +538,8 @@ colSums(is.na(master)) # Count missing per column
 
 
 
-# DATA LOADING AND INITIAL EXPLORATION
+# LOADING Our Master File (that's the "Customer_Churn_Data.csv") AND INITIAL EXPLORATION
+
 
 df <- read_csv(file.choose(), show_col_types = FALSE)
 
@@ -513,7 +567,7 @@ df <- df %>% mutate(Gender = as.factor(Gender), MaritalStatus = as.factor(Marita
 
 
 # ==============================================================================
-#                                FEATURE ENGINEERING
+#                               More FEATURE ENGINEERING
 # ==============================================================================
 # Creating domain-specific features captures business logic and non-linear relationships that improve model performance.
 
@@ -609,7 +663,9 @@ if(length(high_corr) > 0) {df_final <- df_final %>% select(-all_of(names(numeric
 df_final <- df_final %>% select(-CustomerID, -DaysSinceLastLogin, -Age)
 
 
-# 2. Model Training Pipeline
+
+
+# Model Training Pipeline
 
 ## A stratified 80/20 split is performed to ensure the proportion of churners is the same in both the training and testing sets.
 
@@ -625,8 +681,7 @@ prop.table(table(test_data$ChurnStatus))
 
 ## Preprocessing Recipe & Class Imbalance
 # We define a preprocessing recipe using `caret`. This includes one-hot encoding for categorical variables and **SMOTE** 
-# for handling
-# class imbalance directly within the cross-validation process.
+# for handling class imbalance directly within the cross-validation process.
 
 
 # Define the training control with 10-fold Cross-Validation
@@ -699,7 +754,7 @@ dotplot(results)
 ## Performance Metrics Table: We calculate Accuracy, Precision, Recall, Specificity, F1-Score, ROC-AUC, and PR-AUC for each model.
 
 
-# Function to get all metrics
+# Setting up a function to get all metrics
 
 get_metrics <- function(model, test_data) {
   predictions_class <- predict(model, newdata = test_data)
@@ -746,7 +801,7 @@ kable(metrics_summary, digits = 3, caption = "Model Performance Comparison on Te
 
 
 
-## ROC and PR Curves
+## 3. ROC and PR Curves
 
 # Get probabilities for all models
 probs_lr <- predict(model_lr, test_data, type = "prob")$Yes
@@ -814,38 +869,11 @@ legend("topright", legend = c("Logistic Reg", "Random Forest", "GBM", "XGBoost (
 # cm_nnet <- confusionMatrix(nnet_preds, test_data$ChurnStatus, positive = "Yes")
 # print(cm_nnet)
 
-# --- Create a more readable confusion matrix output ---
+# --- Creating a more readable confusion matrix output ---
 
 # 1. Create confusion matrix object
 nnet_preds <- predict(model_nnet, test_data)
 cm_nnet <- confusionMatrix(nnet_preds, test_data$ChurnStatus, positive = "Yes")
-
-cm_nnet
-
-# Create a function to print it nicely
-print_descriptive_cm <- function(cm) {
-  # Extract the 4 cells from the confusion matrix table
-  tn <- cm$table[1, 1] # True Negative
-  fp <- cm$table[1, 2] # False Positive
-  fn <- cm$table[2, 1] # False Negative
-  tp <- cm$table[2, 2] # True Positive
-  
-# Use cat() to print formatted text
-  cat("Confusion Matrix (Descriptive)\n")
-  cat("------------------------------------------------------------------------\n")
-  cat(sprintf("%-20s %-30s %-30s\n", "", "Actual", "Actual"))
-  cat(sprintf("%-20s %-30s %-30s\n", "Prediction: No", 
-              paste(tn, "(True Negatives)"), 
-              paste(fn, "(False Negatives)")))
-  cat(sprintf("%-20s %-30s %-30s\n", "Prediction: Yes", 
-              paste(fp, "(False Positives)"), 
-              paste(tp, "(True Positives)")))
-  cat("------------------------------------------------------------------------\n")
-}
-
-# Call the function to print your result
-print_descriptive_cm(cm_nnet)
-
 
 
 # 2. Extract the matrix table and convert it to a tidy data frame
@@ -914,8 +942,8 @@ feature_importance_df <- importance$importance %>% as.data.frame() %>% rownames_
 head(feature_importance_df)
 
 
-# Threshold Tuning
-# We analyze how performance metrics change at different probability thresholds to potentially optimize for higher recall.
+# 5. Threshold Tuning
+#    We analyze how performance metrics change at different probability thresholds to potentially optimize for higher recall.
 
 thresholds <- seq(0.1, 0.9, by = 0.05)
 threshold_metrics <- map_df(thresholds, function(thresh) {
@@ -951,8 +979,7 @@ predictions_all_customers <- df_eng %>%
   mutate(HasUnresolvedIssues = factor(ifelse(NumUnresolved > 0, "Yes", "No")), 
          IsHighlyInactive = factor(ifelse(DaysSinceLastLogin > 90, "Yes", "No")), 
          AvgTransactionsPerLogin = ifelse(LoginFrequency > 0, NumTransactions / LoginFrequency, 0), 
-         AgeGroup = cut(Age, breaks = c(17, 24, 34, 44, 54, 64, Inf), labels = c("18-24", "25-34", "35-44", "45-54", 
-                                                                                 "55-64", "65+")),
+         AgeGroup = cut(Age, breaks = c(17, 24, 34, 44, 54, 64, Inf), labels = c("18-24", "25-34", "35-44", "45-54", "55-64", "65+")),
     # Predict churn probability
     Churn_Probability = predict(model_nnet, newdata = ., type = "prob")$Yes,
     # Create Risk Segments
@@ -971,10 +998,10 @@ customer_segments_report <- predictions_all_customers %>% group_by(RiskSegment) 
             ActualChurnRate = mean(ChurnStatus == "Yes") # Calculate actual churn rate
             ) %>% arrange(factor(RiskSegment, levels = c("Critical", "High", "Medium", "Low")))
 
-write_csv(customer_segments_report, "C:/Users/Charles/Downloads/R Project/My First R Project/customer_segments.csv")
+# write_csv(customer_segments_report, "C:/Users/Charles/Downloads/R Project/My First R Project/customer_segments.csv")
 kable(customer_segments_report, digits = 3, caption = "Customer Risk Segment Analysis")
 
-sapply(df_eng, class)
+
 
 
 # --- Deliverable 2: top_risk_customers.csv ---
@@ -986,19 +1013,7 @@ top_risk_customers <- predictions_all_customers %>% filter(RiskSegment == "High"
 actual_churn_rate_top_risk <- customer_segments_report %>% filter(RiskSegment == "High") %>% pull(ActualChurnRate)
 
 print(paste("Actual Churn Rate for High Risk Customers:", scales::percent(actual_churn_rate_top_risk)))
-write_csv(top_risk_customers, "C:/Users/Charles/Downloads/R Project/My First R Project/top_risk_customers.csv")
-
-
-
-
-# --- Deliverable 3: predictions_all_customers.csv ---
-write_csv(predictions_all_customers %>% select(CustomerID, Churn_Probability, RiskSegment, ChurnStatus), 
-          "predictions_all_customers.csv")
-
-# --- Deliverable 4: feature_importance.csv ---
-write_csv(feature_importance_df_v2, "feature_importance.csv")
-
-print("All deliverables, including segmentation report, have been generated.")
+# write_csv(top_risk_customers, "C:/Users/Charles/Downloads/R Project/My First R Project/top_risk_customers.csv")
 
 
 
@@ -1006,21 +1021,21 @@ print("All deliverables, including segmentation report, have been generated.")
 
 # --- Generate the List of 26 Correctly Identified At-Risk Customers ---
 
-# Get the predictions and probabilities for the test set from our champion model
+# 1. Get the predictions and probabilities for the test set from our champion model
 
 nnet_probs <- predict(model_nnet, test_data, type = "prob")$Yes
 
-# Add the predictions and original CustomerID back to the test data
+# 2. Add the predictions and original CustomerID back to the test data
 # We need to re-add CustomerID to join back original features like Age and DaysSinceLastLogin
 test_data_with_preds <- test_data %>% mutate(CustomerID = as.numeric(rownames(test_data)), # Get original row number as CustomerID 
                                              Predicted_Churn = nnet_preds, Churn_Probability = nnet_probs
                                              )
 
-# Filter for the True Positives
+# 3. Filter for the True Positives
 # These are customers where the Actual Churn was "Yes" AND our Prediction was also "Yes"
 true_positives_df <- test_data_with_preds %>% filter(ChurnStatus == "Yes" & Predicted_Churn == "Yes")
 
-# Select the desired columns and join back original data for the final report
+# 4. Select the desired columns and join back original data for the final report
 # We will select the following columns Since 'ActivityLevel' and 'TransactionFrequency' 
 # are concepts, we will use 'LoginFrequency' and 'NumTransactions' as their direct measures.
 final_at_risk_list <- true_positives_df %>%
@@ -1042,24 +1057,24 @@ final_at_risk_list <- true_positives_df %>%
   # Arrange by highest probability to prioritize outreach
   arrange(desc(Churn_Probability))
 
-# Print the final list as a polished table
+# 5. Print the final list as a polished table
 kable(final_at_risk_list, digits = 3, caption = "List of 26 High-Risk Customers Correctly Identified by the Model (True Positives)")
 
-write_csv(final_at_risk_list, "C:/Users/Charles/Downloads/R Project/My First R Project/top_at_risk_customers.csv")
+# write_csv(final_at_risk_list, "C:/Users/Charles/Downloads/R Project/My First R Project/top_at_risk_customers.csv")
 
 
 
-# 6. Business Recommendations & ROI
+# Business Recommendations & ROI
 
 ## Recommendations
-# 1. Overhaul Customer Support Feedback: Immediately address any customer with an unresolved ticket (`NumUnresolved` > 0).
+# 1. The primary churn drivers remain poor customer service and low engagement
 # 2. Launch Re-Engagement Campaign: Target customers with `DaysSinceLastLogin` > 60 days with incentives.
 # 3. Create High-Risk Watch-list: 
 # 4. Use the model's predictions to assign customers with >75% churn probability to a dedicated retention team.
 
 
 
-## CalCalculate ROI based on the below parameters
+## CalCulate ROI based on the below parameters
 
 # Assumptions
 arpc <- 1500 # Average Revenue Per Customer
@@ -1090,21 +1105,3 @@ roi_summary <- tibble(
 )
 
 kable(roi_summary, caption = "Estimated ROI of Intervention Campaign", format.args = list(big.mark = ","))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
