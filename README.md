@@ -47,7 +47,7 @@ Source Files Consolidated:
    - Data Model
          <img width="33000" height="2500" alt="image" src="https://github.com/user-attachments/assets/7cca7e56-342d-46e3-8b18-a300e7837ff5" />
 
-   - Master File: Consolidated into a single source of truth (Customer_Churn_Data.csv).
+   - 5 fives prepared & consolidated into one single source of truth (Customer_Churn_Data.csv).
    - Size: 1,000 customers with 17 features
    - Feature Categories: Numerical Features (11), Categorical Features (4)
 
