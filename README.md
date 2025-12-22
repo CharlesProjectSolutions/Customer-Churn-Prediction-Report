@@ -70,11 +70,11 @@ Source Files Consolidated:
    - **Customer Service Resolution vs Churn:** The churn rate is almost identical between resolved (20.5%) and unresolved (20.7%) cases. **Resolution Status** alone may not be a strong churn predictor. So, it might not be whether an issue was resolved or unresolved. It may be how long it took, how many interactions were addressed, or how many issues were unresolved over time.
 
 
-     - **Visualize Correlations & Identify Multicollinearity**
+     **Visualize Correlations & Identify Multicollinearity**
      
      <img width="2000" height="1200" alt="Correlation" src="https://github.com/user-attachments/assets/c3ce3106-ce53-42df-80e9-aec9e2a03306" />
 
- - **Multicollinearity:** A high correlation was found between a couple of features. For example: TotalSpend, AvgSpend and NumTransactions etc.
+ - High correlation found between a couple of features. For example: TotalSpend, AvgSpend and NumTransactions etc.
  - Drop highly correlated (e.g. TotalSpend will be dropped in favor of the more granular AvgSpend and NumTransactions) features to avoid **redundancy**.
  
  --- 
