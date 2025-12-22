@@ -62,19 +62,20 @@ Source Files Consolidated:
    - **Visualize Distributions**
    <img width="2000" height="1200" alt="EDA" src="https://github.com/user-attachments/assets/994bd48e-e57a-49ba-9574-3b59b579c616" />
 
-   - **Visualize Correlations & Identify Multicollinearity**
-     
-     <img width="2000" height="1200" alt="Correlation" src="https://github.com/user-attachments/assets/c3ce3106-ce53-42df-80e9-aec9e2a03306" />
-
-
 ### Key Findings
    - **Class Imbalance:** The target variable ChurnStatus was imbalanced, with churned customers representing only 20% of the dataset, which will require balancing strategies (SMOTE, class weights, etc.) in modeling. To address the issue of class imbalance, SMOTE was applied during resampling to prevent data leakage 
    - **Age Distribution:** Customers are fairly evenly distributed across ages 18 – 69, and no obvious skew.
    - **Churn by Income Level:** Churn is present across all income levels. Slightly higher churn counts in Low income groups (Could suggest income sensitivity plays a role in churn).
    - **Login Frequency vs Churn:** Churners show lower median login frequency compared to retained customers. It suggests engagement is a strong predictor of retention.
    - **Customer Service Resolution vs Churn:** The churn rate is almost identical between resolved (20.5%) and unresolved (20.7%) cases. **Resolution Status** alone may not be a strong churn predictor. So, it might not be whether an issue was resolved or unresolved. It may be how long it took, how many interactions were addressed, or how many issues were unresolved over time.
+
+
+     - **Visualize Correlations & Identify Multicollinearity**
      
- - **Multicollinearity:** A high correlation was found between TotalSpend, AvgSpend and NumTransactions etc. To avoid redundancy, TotalSpend was dropped in favor of the more granular AvgSpend and NumTransactions features 
+     <img width="2000" height="1200" alt="Correlation" src="https://github.com/user-attachments/assets/c3ce3106-ce53-42df-80e9-aec9e2a03306" />
+
+ - **Multicollinearity:** A high correlation was found between a couple of features. For example: TotalSpend, AvgSpend and NumTransactions etc.
+ - Drop highly correlated (e.g. TotalSpend will be dropped in favor of the more granular AvgSpend and NumTransactions) features to avoid **redundancy**.
  
  --- 
 
